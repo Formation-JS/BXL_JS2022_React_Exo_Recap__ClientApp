@@ -14,8 +14,8 @@ const MessageList = ({ messages }) => {
                         </ListItemText>
                         <ListItemText>
                             <Stack direction='row' justifyContent='space-between'>
-                                <p>{message.author}</p>
-                                <p>{message.createAt.toLocaleString('fr-be')}</p>
+                                <span>{message.author}</span>
+                                <span>{message.createAt.toLocaleString('fr-be')}</span>
                             </Stack>
                         </ListItemText>
                     </Stack>

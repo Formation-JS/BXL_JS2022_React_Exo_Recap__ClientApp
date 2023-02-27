@@ -1,25 +1,44 @@
-import { Button } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { Button, Stack, TextField } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
+const messageSchema = yup.object({
+    content: yup.string().required().trim()
+});
 
-const MessageForm = ({onNewMessage}) => {
+const MessageForm = ({ onNewMessage }) => {
 
-    const { handleSubmit } = useForm();
+    const { handleSubmit, control, reset, setFocus } = useForm({
+        resolver: yupResolver(messageSchema),
+        defaultValues: {
+            content: ''
+        }
+    });
 
     const handleMessage = (data) => {
-
-        onNewMessage({
-            content: 'Hello World'
-        })
+        onNewMessage(data);
+        setFocus('content');
+        reset();
     };
 
     return (
         <form onSubmit={handleSubmit(handleMessage)}>
-            TODO Finir le formulaire O_o
+            <Stack direction='column' spacing={1}>
+                <Controller name='content' control={control} render={({ field: {ref, ...field} }) => (
+                    <TextField
+                        label='Contenu du message'
+                        multiline
+                        rows={3}
+                        inputRef={ref}
+                        {...field}
+                    />
+                )} />
 
-            <Button type='submit' variant='contained' color='primary'>Envoyer</Button>
+                <Button type='submit' variant='contained' color='primary'>Envoyer</Button>
+            </Stack>
         </form>
-    )
-}
+    );
+};
 
 export default MessageForm;

@@ -14,8 +14,19 @@ export const fetchMessages = (categoryId) => {
     })));
 };
 
+export const fetchCategories = () => {
+    const url = import.meta.env.VITE_API_URL + '/api/subject/category';
+    return axios.get(url).then(({ data }) => data.map(category => ({
+        id: category.id,
+        name: category.name,
+        count: category.count,
+        image: import.meta.env.VITE_API_URL + '/' + category.icon,
+        lastUpdate: new Date(category.lastUpdate * 1000)
+    })));
+};
+
 export const sendNewMessage = ((categoryId, data) => {
     const url = import.meta.env.VITE_API_URL + '/api/subject/' + categoryId + '/message';
 
     return axios.post(url, data);
-})
+});

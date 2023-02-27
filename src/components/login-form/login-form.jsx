@@ -25,7 +25,7 @@ const LoginForm = ({ onLogin }) => {
             <Stack direction='column' spacing={1} >
                 <Controller name='username' control={control} render={({ field }) => (
                     <TextField
-                        error={errors.username}
+                        error={!!errors.username}
                         label="Username"
                         size="small"
                         {...field}

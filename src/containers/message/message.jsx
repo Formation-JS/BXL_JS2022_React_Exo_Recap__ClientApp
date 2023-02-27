@@ -12,6 +12,7 @@ const Message = ({categoryId, username}) => {
     const [update, setUpdate] = useState(new Date());
 
     useEffect(() => {
+        // Envoye de la requete
         fetchMessages(categoryId)
             .then((result) => setData(result))
             .catch((error) => setError(error));
@@ -20,6 +21,9 @@ const Message = ({categoryId, username}) => {
             setData(null);
             setError(null);
         }
+
+        // Ce useEffect utilise les parametres "categoryId", "update" en tant que garde
+        // → Cela permet d'actualiser les données quand la valeur de "update" est modifié
     }, [categoryId, update]);
 
     const handleNewMessage = useCallback(({content}) => {
@@ -28,8 +32,11 @@ const Message = ({categoryId, username}) => {
             content
         };
 
+        // Envoye d'un nouveau message dans l'API
+        // Mise a jour de la valeur "update" pour re-déclancher le code du "useEffect"
         sendNewMessage(categoryId, newMessage)
             .then(() => setUpdate(new Date()));
+        
     });
 
     return (
